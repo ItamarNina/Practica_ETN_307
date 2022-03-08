@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <math.h>
+#include <limits.h>
 
 using namespace std;
 int **matriz(int fila, int columna); // para crear la matriz
@@ -25,9 +26,29 @@ int main(int argc, char **argv)
   int nx;
   int *nsimo, **vandermonde;
   int i;
-  cout<<endl;
-  cout<<"Ingrese el enesimo de Vandermonde a generar"<<endl;
-  cin>>nx;
+    while (true)        //Para la verificacion de datos
+    {   cout << "\nIngrese el enesimo de Vandermonde a generar (De 1 a 10, enteros): "; cin >> nx;
+        if (cin.fail()) // Si nada se pone será verdadero
+        {   cout<<"Caracter invalido\n";
+            cin.clear(); // Para resetear los bits
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            //ignore() es usado para limpiar los datos incorrectos
+            continue; // El ciclo iniciará de nuevo
+        }
+        //Para limpiar datos adicionales como: atr15 (atr es adicional)
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        // Remueve los datos adicionales de la entrada de datos
+        if (cin.gcount() > 1) 
+        // Devolvera mas de 1 si hay algun sobrante de datos invalidos
+        {   cout<<"Caracter invalido, no te pases de listo\n";
+            continue; // el ciclo iniciará de nuevo
+        }
+        if (nx>=11 || nx<=0)       //poniendo limite al numero de caracteres escritos
+        {   cout<<"Limite de caracteres alcanzado\n";
+            continue;   //el ciclo iniciará de nuevo
+        }
+        break; //rompe el ciclo
+    }
   vandermonde = matriz(nx, nx); // crea la salida de la matriz
   nsimo = (int*) calloc (nx, sizeof(int));
   for(i=0; i<nx; i++) //llena el enesimo valor
